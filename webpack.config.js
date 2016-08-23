@@ -51,7 +51,9 @@ const coreBundles = {
     'aurelia-templating',
     'aurelia-templating-binding',
     'aurelia-templating-router',
-    'aurelia-templating-resources'
+    'aurelia-templating-resources',
+    'aurelia-fetch-client',
+    'isomorphic-fetch'
   ]
 }
 
@@ -65,6 +67,10 @@ const baseConfig = {
     path: outDir,
   }
 }
+
+const fileCopyPattern = [
+  { from: 'favicon.ico', to: 'favicon.ico' }
+]
 
 // advanced configuration:
 switch (ENV) {
@@ -95,38 +101,10 @@ switch (ENV) {
         ({appChunkName: 'app', firstChunk: 'aurelia-bootstrap'}),
 
       require('@easy-webpack/config-copy-files')
-        ({patterns: [{ from: 'favicon.ico', to: 'favicon.ico' }]}),
+        ({patterns: fileCopyPattern}),
 
       require('./config-uglify')
         ({debug: false})
-    );
-    break;
-
-  case 'test':
-    config = generateConfig(
-      baseConfig,
-
-      require('@easy-webpack/config-env-development')
-        ({devtool: 'inline-source-map'}),
-
-      require('@easy-webpack/config-aurelia')
-        ({root: rootDir, src: srcDir, title: title, baseUrl: baseUrl}),
-
-      require('@easy-webpack/config-typescript')
-        ({ options: { doTypeCheck: false, compilerOptions: { sourceMap: false, inlineSourceMap: true } }}),
-
-      require('@easy-webpack/config-html')(),
-
-      require('@easy-webpack/config-css')
-        ({ filename: 'styles.css', allChunks: true, sourceMap: false }),
-
-      require('@easy-webpack/config-fonts-and-images')(),
-      require('@easy-webpack/config-global-bluebird')(),
-      require('@easy-webpack/config-global-jquery')(),
-      require('@easy-webpack/config-global-regenerator')(),
-      require('@easy-webpack/config-generate-index-html')(),
-
-      require('@easy-webpack/config-test-coverage-istanbul')()
     );
     break;
 
@@ -155,7 +133,7 @@ switch (ENV) {
         ({minify: false}),
 
       require('@easy-webpack/config-copy-files')
-        ({patterns: [{ from: 'favicon.ico', to: 'favicon.ico' }]}),
+        ({patterns: fileCopyPattern}),
 
       require('@easy-webpack/config-common-chunks-simple')
         ({appChunkName: 'app', firstChunk: 'aurelia-bootstrap'})
