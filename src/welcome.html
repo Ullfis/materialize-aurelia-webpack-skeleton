@@ -3,8 +3,8 @@
     <div class="container">
       <h3>${heading}</h3>
       <md-card>
-        <md-input md-label="First Name" md-value.bind="firstName"></md-input>
-        <md-input md-label="Last Name" md-value.bind="lastName"></md-input>
+        <md-input md-label="First Name" md-value.bind="firstName & validate:rules"></md-input>
+        <md-input md-label="Last Name" md-value.bind="lastName & validate:rules"></md-input>
         <button type="button" md-button md-waves="color: light;" click.delegate="greet()" md-modal-trigger href="#modal1">Submit</button>
       </md-card>
       <md-card md-title="Full name">
@@ -22,5 +22,17 @@
         </div>
       </div>
     </div>
+
+    <div show.bind="controller.errors.length">
+      <h4 class="error-text">Errors</h4>
+      <ul style="margin-top: 15px;">
+        <li repeat.for="error of controller.errors">
+          <a href="#" click.delegate="error.target.focus()">
+            ${error.message}
+          </a>
+        </li>
+      </ul>
+    </div>
+
   </section>
 </template>

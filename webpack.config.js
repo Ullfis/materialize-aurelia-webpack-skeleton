@@ -33,6 +33,7 @@ const coreBundles = {
     'aurelia-binding',
     'aurelia-dependency-injection',
     'aurelia-event-aggregator',
+    'aurelia-fetch-client',
     'aurelia-framework',
     'aurelia-history',
     'aurelia-history-browser',
@@ -52,7 +53,7 @@ const coreBundles = {
     'aurelia-templating-binding',
     'aurelia-templating-router',
     'aurelia-templating-resources',
-    'aurelia-fetch-client',
+    'aurelia-validation',
     'isomorphic-fetch'
   ]
 }

@@ -14,6 +14,7 @@ export async function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
+    .plugin('aurelia-validation')
     .plugin('aurelia-materialize-bridge', b => b.useAll());
 
   // Uncomment the line below to enable animation.
