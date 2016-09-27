@@ -1,10 +1,27 @@
-import {computedFrom} from 'aurelia-framework';
+import { computedFrom, inject, NewInstance } from 'aurelia-framework';
+import { ValidationController, ValidationRules } from 'aurelia-validation';
+import { MaterializeFormValidationRenderer } from 'aurelia-materialize-bridge';
 
+@inject(NewInstance.of(ValidationController))
 export class Welcome {
   heading: string = 'Welcome to the Aurelia Navigation App';
   firstName: string = 'John';
   lastName: string = 'Doe';
   previousValue: string = this.fullName;
+
+  controller = null;
+  rules = ValidationRules
+    .ensure('firstName')
+      .required()
+    .ensure('lastName')
+      .required()
+      .minLength(4)
+    .rules;
+
+  constructor(controller: ValidationController) {
+    this.controller = controller;
+    this.controller.addRenderer(new MaterializeFormValidationRenderer());
+  }
 
   //Getters can't be directly observed, so they must be dirty checked.
   //However, if you tell Aurelia the dependencies, it no longer needs to dirty check the property.
@@ -17,6 +34,7 @@ export class Welcome {
 
   greet() {
     this.previousValue = this.fullName;
+    this.controller.validate();
   }
 
   canDeactivate(): boolean {
